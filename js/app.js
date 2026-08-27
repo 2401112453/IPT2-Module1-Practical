@@ -1,41 +1,66 @@
-// Wait for the webpage to load before running anything
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. Grab the "Add Student" button from the HTML
-    let addButton = document.getElementById("addStudentButton");
+    // ==========================================
+    // DEV 1: ADD STUDENT FUNCTION (With Safety Wall)
+    // ==========================================
+    let addStudentBtn = document.getElementById("addStudentButton");
+    
+    // Only run this if we are on the Student page
+    if (addStudentBtn) {
+        addStudentBtn.addEventListener("click", function() {
+            let id = document.getElementById("idNumber").value;
+            let fname = document.getElementById("firstName").value;
+            let mname = document.getElementById("middleName").value;
+            let lname = document.getElementById("lastName").value;
 
-    // 2. Tell the button what to do when clicked
-    addButton.addEventListener("click", function() {
-        
-        // 3. Grab the typed text from all four input boxes
-        let id = document.getElementById("idNumber").value;
-        let fname = document.getElementById("firstName").value;
-        let mname = document.getElementById("middleName").value;
-        let lname = document.getElementById("lastName").value;
+            if (id === "" || fname === "" || mname === "" || lname === "") {
+                alert("Stop. Fill in all student details.");
+                return;
+            }
 
-        // 4. Stop bad data. Do not let them add an empty row.
-        if (id === "" || fname === "" || mname === "" || lname === "") {
-            alert("Stop. Fill in all student details.");
-            return;
-        }
+            let tableBody = document.getElementById("table-content");
+            let newRow = tableBody.insertRow();
 
-        // 5. Find the table body where the new row will go
-        let tableBody = document.getElementById("table-content");
+            newRow.insertCell(0).innerHTML = id;
+            newRow.insertCell(1).innerHTML = fname;
+            newRow.insertCell(2).innerHTML = mname;
+            newRow.insertCell(3).innerHTML = lname;
 
-        // 6. Create a brand new row
-        let newRow = tableBody.insertRow();
+            document.getElementById("idNumber").value = "";
+            document.getElementById("firstName").value = "";
+            document.getElementById("middleName").value = "";
+            document.getElementById("lastName").value = "";
+        });
+    }
 
-        // 7. Put the grabbed text into the table cells
-        newRow.insertCell(0).innerHTML = id;
-        newRow.insertCell(1).innerHTML = fname;
-        newRow.insertCell(2).innerHTML = mname;
-        newRow.insertCell(3).innerHTML = lname;
+    // ==========================================
+    // DEV 2: ADD SUBJECT FUNCTION (With Safety Wall)
+    // ==========================================
+    let addSubjectBtn = document.getElementById("addSubject");
 
-        // 8. Wipe the input boxes clean for the next entry
-        document.getElementById("idNumber").value = "";
-        document.getElementById("firstName").value = "";
-        document.getElementById("middleName").value = "";
-        document.getElementById("lastName").value = "";
-    });
+    // Only run this if we are on the Subject page
+    if (addSubjectBtn) {
+        addSubjectBtn.addEventListener("click", function() {
+            let subCode = document.getElementById("subjectCode").value;
+            let subName = document.getElementById("subjectName").value;
+            let subUnits = document.getElementById("units").value;
+
+            if (subCode === "" || subName === "" || subUnits === "") {
+                alert("Stop. Fill in all subject details.");
+                return;
+            }
+
+            let tableBody = document.getElementById("table-content");
+            let newRow = tableBody.insertRow();
+
+            newRow.insertCell(0).innerHTML = subCode;
+            newRow.insertCell(1).innerHTML = subName;
+            newRow.insertCell(2).innerHTML = subUnits;
+
+            document.getElementById("subjectCode").value = "";
+            document.getElementById("subjectName").value = "";
+            document.getElementById("units").value = "";
+        });
+    }
 
 });
